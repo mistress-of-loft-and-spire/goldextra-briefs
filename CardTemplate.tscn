@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dbg3rrcb2335p"]
+[gd_scene load_steps=20 format=3 uid="uid://dbg3rrcb2335p"]
 
 [ext_resource type="Texture2D" uid="uid://dkq7k514byr8q" path="res://assets/img/card_frame.png" id="1_8uoye"]
 [ext_resource type="Script" path="res://Card.gd" id="2_lfpif"]
@@ -22,6 +22,14 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_jg6s5")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_2qp5s"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ygn0u"]
+gradient = SubResource("Gradient_2qp5s")
+width = 65
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_noj8t"]
 size = Vector3(2.85254, 4.8538, 1)
@@ -111,6 +119,12 @@ transform = Transform3D(1.08082, 0, 0, 0, 1.05552, 3.55271e-15, 0, -3.55271e-15,
 visible = false
 render_priority = -1
 texture = ExtResource("1_8uoye")
+
+[node name="Progress" type="Sprite3D" parent="Visual"]
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 1, -1.32606, 1.94668, 0.600054)
+visible = false
+offset = Vector2(33, 0)
+texture = SubResource("GradientTexture2D_ygn0u")
 
 [node name="Area3D" type="Area3D" parent="."]
 monitoring = false

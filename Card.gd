@@ -1,20 +1,20 @@
 extends Node3D
 
 @onready var cardConsumed = preload("res://ConsumedCard.tscn")
+@onready var cardEffect = preload("res://CardEffect.tscn")
 
 var dragging = false;
 var hover = false;
 @onready var timer:Timer = Timer.new();
+@onready var progressTimer:Timer = Timer.new();
 var targetAngle = 0.0
 
-@onready var root = get_parent()
+var root = null
 var child = null
-
 
 var pickable = true
 
 var countdown = -1.0
-
 
 var type:String = "notype"
 
@@ -27,6 +27,8 @@ func _ready():
 	$Visual/highlight.visible = false
 
 func _process(delta):
+	if get_parent() == null:
+		print("weird!!!!!!!!!!!")
 	
 	if dragging:
 		var targetPos = Vector3(0,0,0)
@@ -54,17 +56,10 @@ func _process(delta):
 		
 		if hover:
 			$Visual/highlight.visible = true
-			if pickable && child != null:
+			if child != null:
+				position.y = lerp(position.y, 0.061,0.5)
+			elif pickable:
 				position.y = lerp(position.y, 0.2,0.5)
-			if Input.is_action_just_released("Click"):
-				if root.dragging != null:
-					var placecard = root.dragging
-					child = placecard
-					placecard.putDown()
-					placecard.reparent(self,false)
-					placecard.global_position = global_position
-					placecard.position.y += 0.4
-					placecard.position.z += 1
 					
 		else:
 			timer.stop()
@@ -101,27 +96,49 @@ func pickUp():
 		$oink.play()
 	timer.stop()
 	dragging = true
-	root.dragging = self
-	turnoffCol()
+	turnCol(false)
+	if root.hoveredCard == self:
+		root.hoveredCard = null
 	
 func putDown():
 	$place.play()
 	dragging = false
-	if root.dragging == self:
-		root.dragging = null
-	turnonCol()
-	
+	if root.hoveredCard == self:
+		root.hoveredCard = null
+	elif root.hoveredCard != null:
+		var childcard = root.hoveredCard.returnChild()
+		placeCardOnTop(self, childcard)
+		checkEffect()
+		
+		root.hoveredCard = null
+	turnCol(true)
+	if get_parent() == root && position.x >= -7 && position.x <= -4:
+		if position.z >= -2 && position.z <= 1:
+			position.x += 2;
+			position.z += 2;
+		
+
+func placeCardOnTop(top, bottom):
+	top.reparent(bottom,false)
+	if bottom != root:
+		bottom.child = top
+		top.global_position = bottom.global_position
+		top.position.y += 0.4
+		top.position.z += 1
 	
 func highlight():
 	if Grimoire.paused:
 		return
 	if !dragging:
+		root.hoveredCard = self
 		$high.play()
 		timer.start(0.5)
 	hover = true
 
 func unHighlight():
 	hover = false
+	if root.hoveredCard == self:
+		root.hoveredCard = null
 	
 func showLabel() -> void:
 	$Label.visible = true
@@ -130,27 +147,58 @@ func showLabel() -> void:
 	
 func countdownDone():
 	consume()
-	
-func turnoffCol():
-	$Area3D.visible = false
-	if child != null:
-		child.turnoffCol()
 
-func turnonCol():
-	$Area3D.visible = true
+func turnCol(onoff, skiprootcheck = false):
+	if !skiprootcheck && get_parent() != root:
+		get_parent().turnCol(onoff)
+	else:
+		get_node("Area3D").visible = onoff
+		if child != null:
+			child.turnCol(onoff, true)
+
+func returnChild():
 	if child != null:
-		child.turnonCol()
+		return child.returnChild()
+	else:
+		return self
+	
+func checkEffect():
+	if get_parent() != root:
+		print(self.type + " " + str(get_parent()) + " " + str(root))
+		get_parent().checkEffect()
+		return
+		
+	if child == null:
+		return
+	
+	match type:
+		"ship":
+			if child.type == "fuel":
+				child.consume()
+				var card = root.addCard(Vector2(position.x,position.z), "wayfinding", "wayfinding", "Wayfinding")
+				placeCardOnTop(card,self)
+				effect()
+		"signal":
+			if child.type == "wayfinding":
+				child.consume()
+				countdown += 60
+				effect()
+	
+func effect():
+	var eff = cardEffect.instantiate()
+	eff.position = position
+	get_parent().add_child(eff)
 	
 func consume():
+	if get_parent() == root:
+		turnCol(true)
 	if child != null:
-		if get_parent() != root:
-			child.reparent(get_parent())
-		else:
-			child.reparent(root)
-		child.global_position = global_position
+		placeCardOnTop(child,get_parent())
 	var cons = cardConsumed.instantiate()
 	cons.position = position
 	get_parent().add_child(cons)
+	if root.hoveredCard == self:
+		root.hoveredCard = null
 	queue_free()
 	
 var i = 0

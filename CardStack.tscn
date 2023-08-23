@@ -21,7 +21,7 @@ gradient = SubResource("Gradient_e24bo")
 width = 1
 height = 1
 
-[node name="Card" type="Node3D"]
+[node name="Stack" type="Node3D"]
 script = ExtResource("1_r1a3u")
 
 [node name="Area3D" type="Area3D" parent="."]

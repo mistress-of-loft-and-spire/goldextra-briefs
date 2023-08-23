@@ -1,11 +1,10 @@
-[gd_scene load_steps=55 format=3 uid="uid://bou1ohvmst6gh"]
+[gd_scene load_steps=54 format=3 uid="uid://bou1ohvmst6gh"]
 
 [ext_resource type="PackedScene" uid="uid://c38v1qoee6yag" path="res://assets/models/hand.gltf" id="1_a3jmm"]
 [ext_resource type="Shader" path="res://outline.gdshader" id="2_hura3"]
 [ext_resource type="Script" path="res://Cam.gd" id="2_m75iy"]
 [ext_resource type="Script" path="res://Cards.gd" id="4_123vg"]
 [ext_resource type="ArrayMesh" uid="uid://b6ecf2edpdwbp" path="res://assets/models/table.obj" id="5_c7b7i"]
-[ext_resource type="PackedScene" uid="uid://5oe74pu3qtmp" path="res://CardStack.tscn" id="5_vby2b"]
 [ext_resource type="ArrayMesh" uid="uid://bo6bmsxich7dl" path="res://assets/models/screen.obj" id="8_2qlw4"]
 [ext_resource type="ArrayMesh" uid="uid://7vbrlsugey4y" path="res://assets/models/buttons.obj" id="9_tvvas"]
 [ext_resource type="Script" path="res://light.gd" id="10_e7msv"]
@@ -342,9 +341,6 @@ omni_attenuation = 0.466516
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.339876, 0)
 script = ExtResource("4_123vg")
 
-[node name="Stack" parent="Cards" instance=ExtResource("5_vby2b")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -5, 0, 0)
-
 [node name="CamPos1" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984807, 0, -0.984807, 0.173648, 0, 66.555, 10.452)
 gizmo_extents = 1.0
@@ -371,14 +367,6 @@ material_override = SubResource("StandardMaterial3D_jlrcp")
 mesh = ExtResource("8_2qlw4")
 skeleton = NodePath("../../..")
 script = ExtResource("11_ocq37")
-
-[node name="Label" type="Label3D" parent="Table/Screen"]
-transform = Transform3D(-7.07423e-09, 0.0947838, -0.131179, -7.92699e-15, 0.131179, 0.0947838, 0.16184, 4.14314e-09, -5.73404e-09, 1.492, 0.555, -1.818)
-text = "adadadadadadad"
-font_size = 90
-outline_size = 0
-horizontal_alignment = 0
-vertical_alignment = 0
 
 [node name="MonitorArea" type="Area3D" parent="Table/Screen"]
 transform = Transform3D(0.960551, 0.278103, -3.90657e-15, -0.278103, 0.960551, -7.18265e-16, 3.55271e-15, 1.77636e-15, 1, 1.94972, 0.078932, 0.00555798)

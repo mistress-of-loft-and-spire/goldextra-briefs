@@ -19,22 +19,3 @@ func _process(delta):
 	$Sprite3D.modulate.a = lerp($Sprite3D.modulate.a, lightengergy, 0.3)
 
 var timer = 0.64582751
-
-func _ready():
-	output()
-	
-func output():
-	await get_tree().create_timer(0.2).timeout
-	$Label.text = " Δ " + str(round_to_dec(timer*0.0001,10)) + " ly "
-	for j in 3:
-		$Label.text += "\n"
-		for i in 10:
-			$Label.text += randarr.pick_random()
-	output()
-
-var randarr = ["?︎","▘︎",
-"▙︎","◐︎","▒︎","▒︎","▒︎","█","▒︎","░︎︎","█︎","░︎","░︎","░︎","█",
-"▙︎","█","ញ︎","⁛︎","⚗︎"]
-
-func round_to_dec(num, digit):
-	return round(num * pow(10.0, digit)) / pow(10.0, digit)

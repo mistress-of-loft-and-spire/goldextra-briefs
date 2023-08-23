@@ -11,7 +11,6 @@ func _ready():
 	printText()
 
 func _process(delta):
-	print(inrect)
 	if hover:
 		$Label/Sprite3D2.modulate = Color("#fff")
 	else:

@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var cardTemplate = preload("res://CardTemplate.tscn")
+@onready var cardStack = preload("res://CardStack.tscn")
 @onready var mesTemplate = preload("res://Message.tscn")
 var flavorString = ""
 
@@ -8,7 +9,10 @@ var cursorPos = Vector2(0,0)
 
 var pause = false
 
-var dragging = null
+var hoveredCard = null
+
+func _process(delta):
+	print(hoveredCard)
 
 func _ready():
 	
@@ -17,14 +21,16 @@ func _ready():
 		flavorString += file.get_line() + "\n"
 	file.close()
 	
-	addCard(Vector2(3,0),"pig","char","Waning View")
-	addCard(Vector2(6,0),"pig","char2","Surgeon")
+	addStack()
+	
+	addCard(Vector2(3,0),"pig","char","Crew")
+	addCard(Vector2(6,0),"pig","char2","Crew")
 	addCard(Vector2(0,0),"ship","ship","Ship")
 
-	var planet = addCard(Vector2(5,5),"event","planet","Waning View")
+	var planet = addCard(Vector2(5,5),"planet","planet","Waning View")
 	planet.countdown = 60.0
 	
-	var sig = addCard(Vector2(10,10),"event","signal","The Signal")
+	var sig = addCard(Vector2(10,10),"signal","signal","The Signal")
 	sig.countdown = 60.0
 	
 	addMessage("The year is 2091...
@@ -33,8 +39,21 @@ func _ready():
 	This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test.")
 
 func drawCard(pos:Vector3):
-	var card = addCard(Vector2(pos.x,pos.z), "char", "char", "Test")
-	card.countdown = 20
+	var card
+	
+	match randi_range(0,10):
+		#										type	 name(img)	displayname
+		1:
+			card = addCard(Vector2(pos.x,pos.z), "irons", "swords", "Irons")
+		2:
+			card = addCard(Vector2(pos.x,pos.z), "fuel", "wands", "Fuel")
+		3:
+			card = addCard(Vector2(pos.x,pos.z), "cohesion", "coins", "Cohesion")
+		4:
+			card = addCard(Vector2(pos.x,pos.z), "organs", "cups", "Organs")
+		_:
+			card = addCard(Vector2(pos.x,pos.z), "char", "char", "Test")
+			card.countdown = 20
 	card.pickUp()
 	
 
@@ -64,6 +83,7 @@ func addCard(pos:Vector2 = Vector2(0.0,0.0), type:String = "notype", name:String
 	
 	card.position.x = pos.x; card.position.z = pos.y
 	
+	card.root = self
 	add_child(card)
 	return(card)
 
@@ -79,3 +99,17 @@ func getFlavor(name:String) -> String:
 		var endPos = flavorString.find(":",finderPos)
 		flavor = flavorString.substr(finderPos+name.length(),endPos-(finderPos+name.length()))
 	return flavor
+
+func addStack() -> Node3D:
+	var card = cardStack.instantiate()
+	
+	card.type = "stack"
+	card.label = getFlavor("stack")
+	
+	card.name = "stack"
+	
+	card.position.x = -5; card.position.z = 0
+	
+	card.root = self
+	add_child(card)
+	return(card)
