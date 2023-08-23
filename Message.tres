@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d12lj5sufsfk8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7foj"]
+content_margin_right = 30.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xactb"]
+bg_color = Color(0.192157, 0.309804, 0.588235, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 30.0
+
+[resource]
+ScrollContainer/styles/panel = SubResource("StyleBoxFlat_n7foj")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_xactb")

@@ -1,0 +1,18 @@
+:char
+
+:char2
+
+:planet
+On the viewscreen the solar system recedes into the distance. Having escaped this void you feel elated but anxcious.
+
+⏳ Nothing immediate will happen once this card expires, but you might be able to salvage some resources while still in reach.
+
+:ship
+A junker stolen from a freeport. This freighter was once used to transport 'perishables'.
+
+:signal
+This unrelenting waveform propagates through interstellar void. It is finely tuned to the failsafe algorithm embedded in your DNA.
+
+⏳ If this ticks to ZERO you will perish. Keep increasing the timer by adding TRAVEL or FUEL. Or perhaps there is another way?
+
+:xxxxxxxxxxxxxxxxxx

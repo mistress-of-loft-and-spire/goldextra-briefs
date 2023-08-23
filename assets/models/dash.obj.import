@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c1e1cikbl28li"
+path="res://.godot/imported/dash.obj-1ccaeb12e000af754425a62a5a9523cb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/dash.obj-1ccaeb12e000af754425a62a5a9523cb.mesh"]
+
+source_file="res://assets/models/dash.obj"
+dest_files=["res://.godot/imported/dash.obj-1ccaeb12e000af754425a62a5a9523cb.mesh", "res://.godot/imported/dash.obj-1ccaeb12e000af754425a62a5a9523cb.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

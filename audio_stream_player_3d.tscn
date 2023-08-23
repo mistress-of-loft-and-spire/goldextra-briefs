@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://kgu8sfdbou4o"]
+
+[ext_resource type="AudioStream" uid="uid://cq0vlwdyas3jx" path="res://assets/snd/talk1.ogg" id="1_htfv6"]
+[ext_resource type="AudioStream" uid="uid://dqc4oua8cdrf4" path="res://assets/snd/talk2.ogg" id="2_tdj32"]
+[ext_resource type="AudioStream" uid="uid://bffs3uwbcnpaa" path="res://assets/snd/talk3.ogg" id="3_muh7n"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mbw6e"]
+streams_count = 3
+random_pitch = 1.5
+random_volume_offset_db = 0.0
+stream_0/stream = ExtResource("1_htfv6")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_tdj32")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_muh7n")
+stream_2/weight = 1.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D"]
+stream = SubResource("AudioStreamRandomizer_mbw6e")
+volume_db = -5.0
+bus = &"FX"
