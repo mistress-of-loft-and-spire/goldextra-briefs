@@ -22,13 +22,15 @@ var label = "This is a test label"
 
 func _ready():
 	add_child(timer)
+	add_child(progressTimer)
 	timer.one_shot = true
+	progressTimer.one_shot = true
 	timer.connect("timeout", self.showLabel)
 	$Visual/highlight.visible = false
 
 func _process(delta):
-	if get_parent() == null:
-		print("weird!!!!!!!!!!!")
+	if !progressTimer.is_stopped():
+		$Visual/Progress.scale.x = (1 - (progressTimer.time_left / progressTimer.wait_time)) * 4
 	
 	if dragging:
 		var targetPos = Vector3(0,0,0)
@@ -95,6 +97,7 @@ func pickUp():
 	if type == "pig":
 		$oink.play()
 	timer.stop()
+	cancelEffectTimer()
 	dragging = true
 	turnCol(false)
 	if root.hoveredCard == self:
@@ -162,8 +165,8 @@ func returnChild():
 	else:
 		return self
 	
-func checkEffect():
-	if get_parent() != root:
+func checkEffect(timerDone = false):
+	if !timerDone && get_parent() != root:
 		print(self.type + " " + str(get_parent()) + " " + str(root))
 		get_parent().checkEffect()
 		return
@@ -174,16 +177,31 @@ func checkEffect():
 	match type:
 		"ship":
 			if child.type == "fuel":
-				child.consume()
-				var card = root.addCard(Vector2(position.x,position.z), "wayfinding", "wayfinding", "Wayfinding")
-				placeCardOnTop(card,self)
-				effect()
+				if !timerDone:
+					child.setEffectTimer(3, self)
+				else:
+					child.consume()
+					var card = root.addCard(Vector2(position.x,position.z), "wayfinding", "wayfinding", "Wayfinding")
+					placeCardOnTop(card,self)
+					effect()
 		"signal":
 			if child.type == "wayfinding":
-				child.consume()
-				countdown += 60
-				effect()
+				if !timerDone:
+					child.setEffectTimer(1, self)
+				else:
+					child.consume()
+					countdown += 60
+					effect()
+
+func setEffectTimer(time, callback):
+	progressTimer.connect("timeout", callback.checkEffect.bind(true))
+	progressTimer.start(time)
+	$Visual/Progress.visible = true
 	
+func cancelEffectTimer():
+	progressTimer.stop()
+	$Visual/Progress.visible = false
+
 func effect():
 	var eff = cardEffect.instantiate()
 	eff.position = position
@@ -194,6 +212,7 @@ func consume():
 		turnCol(true)
 	if child != null:
 		placeCardOnTop(child,get_parent())
+		child.checkEffect()
 	var cons = cardConsumed.instantiate()
 	cons.position = position
 	get_parent().add_child(cons)
