@@ -8,8 +8,17 @@ Created for and supported by the [BRIEFS 2023 micro publishing initiative](https
 
 ## Code and Credits
 
+Resources used:
+
+* [Dithering Shader](https://godotshaders.com/shader/dither-gradient-shader/)  
+By Rank1, Adapted from stephanbogner/1-pico8-godot-shader.shader
+* [High Quality Post Process Outline Shader](https://godotshaders.com/shader/high-quality-post-process-outline/)  
+By Hannah "EMBYR" Crawford
+* [Pig Oink Sound](https://freesound.org/people/qubodup/sounds/442906/)  
+By qubodup (CC0)
+
 All game code and assets are open source. Please feel free use them in your own project.
-You could also use this as a base system for a card-based game, but the code is quite janky so use at your own risk :3
+You could also use this project as a basis for your own card-based game, but the code is quite janky so use at your own risk :3
 
 Licensed under the [CNPLv7+ Cooperative Nonviolent Public License](LICENSE)
 
