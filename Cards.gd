@@ -52,8 +52,9 @@ func drawCard(pos:Vector3):
 		4:
 			card = addCard(Vector2(pos.x,pos.z), "organs", "cups", "Organs")
 		_:
-			card = addCard(Vector2(pos.x,pos.z), "char", "char", "Test")
-			card.countdown = 20
+			card = addCard(Vector2(pos.x,pos.z), "fuel", "wands", "Fuel")
+#			card = addCard(Vector2(pos.x,pos.z), "char", "char", "Test")
+#			card.countdown = 20
 	card.pickUp()
 	
 
