@@ -4,6 +4,7 @@ A frantic pigpunk tarot game
 >*Better be a pig than a fascist*  
 >– Porco Rosso
 
+![gold_extra-Logo2015_white_on_transparent](https://github.com/mistress-of-loft-and-spire/goldextra-briefs/assets/2915643/0754fbbb-1117-440a-a5d8-31fa957cb0c7)  
 Created for and supported by the [BRIEFS 2023 micro publishing initiative](https://www.goldextra.com/en/briefs23-a-microgame-series). Curated by Georg Hobmeier and Evgeni Puzankov.
 
 ## Code and Credits
