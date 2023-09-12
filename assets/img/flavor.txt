@@ -1,25 +1,43 @@
 :stack
 The Void
 
-Draw cards from this stack to reach further into 
+We draw cards from this stack to reach further into the darkness.
+
+:wands
+Can be placed on SHIP.
 
 :char
 
 :char2
 
-:planet
-On the viewscreen the solar system recedes into the distance. Having escaped this abyss you feel elated but anxcious.
+:vacuum
+Space devoid of matter. Though tranquil it appears there is nothing here.
 
-⏳ Nothing immediate will happen once this card expires, but you might be able to salvage some resources while still in reach.
+:planet
+A dot on the viewscreen. We might explore here if we have time.
+
+:planetoid
+A dot on the viewscreen. We might explore here if we have time.
+
+:asteroid
+A dot on the viewscreen. We might explore here if we have time.
+
+:sitea
+We discovered an area that might hold resources. Place a crewmember here to retrieve them.
+
+:origin
+With this system receding into the distance we feel elated but anxious.
+
+🔥 Nothing immediate will happen once this card expires, but we might be able to salvage some resources while still in reach.
 
 :ship
-A junker stolen from a freeport. This freighter was once used to transport 'perishables'.
+This stolen freighter was once used to transport 'perishables'.
 
-⬇ Place FUEL on this card to generate WAYFINDING.
+🔥 Place FUEL on this card to generate WAYFINDING.
 
 :signal
-This unrelenting waveform propagates through interstellar void. It is finely tuned to the failsafe algorithm embedded in your DNA.
+This unrelenting waveform propagates through interstellar void. It is finely tuned to the failsafe algorithm embedded in our DNA.
 
-⏳ If this ticks to ZERO you will perish. Keep increasing the timer by adding WAYFINDING. Or perhaps there is another way?
+🔥 If this ticks to ZERO we will perish. We increase the timer by adding WAYFINDING. Or perhaps there is another way?
 
 :xxxxxxxxxxxxxxxxxx

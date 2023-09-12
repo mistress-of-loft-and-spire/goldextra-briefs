@@ -1,13 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://chuoou4meat3j"]
+[gd_scene load_steps=16 format=3 uid="uid://chuoou4meat3j"]
 
 [ext_resource type="Script" path="res://Message.gd" id="1_swkmd"]
 [ext_resource type="Texture2D" uid="uid://c1x0r8crk3dmw" path="res://assets/img/char2.png" id="2_ni6s2"]
 [ext_resource type="Theme" uid="uid://d12lj5sufsfk8" path="res://Message.tres" id="3_1xn43"]
 [ext_resource type="PackedScene" uid="uid://kgu8sfdbou4o" path="res://audio_stream_player_3d.tscn" id="3_ihjwm"]
 [ext_resource type="AudioStream" uid="uid://b213x2nafkii6" path="res://assets/snd/confirm.ogg" id="4_2dmb6"]
+[ext_resource type="FontFile" uid="uid://d22numotcnc8p" path="res://assets/font/OpenSans-Regular.ttf" id="4_kr1rc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_noj8t"]
-size = Vector3(4, 1.63083, 1)
+size = Vector3(2.86007, 1.04862, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y375m"]
+size = Vector3(13.4041, 8.00774, 1)
 
 [sub_resource type="Gradient" id="Gradient_l8x4r"]
 offsets = PackedFloat32Array(1)
@@ -17,6 +21,9 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_l8x4r")
 width = 1
 height = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jxjev"]
+size = Vector3(10.0257, 6, 1)
 
 [sub_resource type="Gradient" id="Gradient_5vp4y"]
 offsets = PackedFloat32Array(1)
@@ -28,28 +35,37 @@ width = 1
 height = 1
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_fqp1o"]
-viewport_path = NodePath("Label/ProjectedDisplay/SubViewport")
+viewport_path = NodePath("Label/ProjectedDisplay/SubViewportContainer/SubViewport")
 
-[sub_resource type="LabelSettings" id="LabelSettings_xsibx"]
-font_size = 60
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jxjev"]
-size = Vector3(21, 6, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_5kcpp"]
+font = ExtResource("4_kr1rc")
+font_size = 40
 
 [node name="Message" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_swkmd")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="butArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55328, -0.681019)
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137476, -5.0641, 7.36305)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="butArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0532036, -4.71136, 7.36305)
 shape = SubResource("BoxShape3D_noj8t")
 
+[node name="boxArea3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4562, 6)
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="boxArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00533199, -1.45848, 0)
+shape = SubResource("BoxShape3D_y375m")
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(4.43927, 0, 0, 0, 1.80754, 0, 0, 0, 1.6731, 0.250276, -1.84267, 6.05233)
+transform = Transform3D(2.67314, 0, 0, 0, 1.60156, 0, 0, 0, 1.6731, 0, 0, 6.052)
+modulate = Color(1, 1, 1, 0.894118)
 pixel_size = 5.0
 alpha_cut = 2
 texture = SubResource("GradientTexture2D_4ahro")
@@ -65,25 +81,25 @@ autowrap_mode = 3
 width = 3000.0
 
 [node name="Illu" type="Sprite3D" parent="Label"]
-transform = Transform3D(0.836052, 0, 0, 0, 0.820609, -7.10543e-15, 0, 3.55271e-15, 0.836052, -3.13887, -2.66723, -0.0182714)
+transform = Transform3D(0.604865, 0, 0, 0, 0.593693, -5.32907e-15, 0, 1.77636e-15, 0.604865, -0.468061, -1.02465, -0.0182714)
 sorting_offset = 1.0
 transparent = false
 texture = ExtResource("2_ni6s2")
 region_rect = Rect2(0, 24, 400, 608)
 
-[node name="ok" type="Label3D" parent="Label"]
-transform = Transform3D(1, 0, 0, 0, 1, -3.68682e-15, 0, 3.68682e-15, 1, 4.52118, -6.78334, 0.83173)
-sorting_offset = 1.0
-texture_filter = 0
-modulate = Color(0, 0, 0, 1)
-text = "ok"
-font_size = 140
-autowrap_mode = 3
-width = 3000.0
+[node name="textArea3D" type="Area3D" parent="Label"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 3.40376, -3.03377, 0.566936)
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Label/textArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.13163e-14, 0, -2.13163e-14, 1, 2.64082, 2.01918, -0.567598)
+shape = SubResource("BoxShape3D_jxjev")
 
 [node name="Sprite3D2" type="Sprite3D" parent="Label"]
-transform = Transform3D(0.711298, 0, 0, 0, 0.240906, 1.77636e-15, 0, 8.88178e-16, 0.500181, 4.52118, -6.78335, 1.03173)
+transform = Transform3D(0.569038, 0, 0, 0, 0.192725, 0, 0, 8.88178e-16, 0.400145, 4.56972, -4.80464, 0.371024)
 pixel_size = 5.0
+transparent = false
 texture = SubResource("GradientTexture2D_plm3h")
 
 [node name="Sprite3D3" type="Sprite3D" parent="Label/Sprite3D2"]
@@ -92,17 +108,34 @@ modulate = Color(0.141176, 0.239216, 0.466667, 1)
 pixel_size = 5.0
 texture = SubResource("GradientTexture2D_plm3h")
 
+[node name="ok" type="Label3D" parent="Label/Sprite3D2"]
+transform = Transform3D(1.40588, 0, 0, 0, 4.151, -2.84217e-14, 0, -1.42109e-14, 1.99928, 0, 4.00543e-05, 0.130503)
+sorting_offset = 1.0
+texture_filter = 0
+modulate = Color(0, 0, 0, 1)
+text = "ok"
+font_size = 140
+autowrap_mode = 3
+width = 3000.0
+
 [node name="ProjectedDisplay" type="Sprite3D" parent="Label"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39873, -2.80835, 0.283882)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.00536, -1.04789, 0.283882)
 transparent = false
 texture = SubResource("ViewportTexture_fqp1o")
 
-[node name="SubViewport" type="SubViewport" parent="Label/ProjectedDisplay"]
-disable_3d = true
-canvas_item_default_texture_filter = 0
-size = Vector2i(1500, 600)
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Label/ProjectedDisplay"]
+offset_left = -4212.0
+offset_top = -2975.0
+offset_right = -4172.0
+offset_bottom = -2935.0
 
-[node name="Container" type="ScrollContainer" parent="Label/ProjectedDisplay/SubViewport"]
+[node name="SubViewport" type="SubViewport" parent="Label/ProjectedDisplay/SubViewportContainer"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(1000, 600)
+render_target_update_mode = 4
+
+[node name="Container" type="ScrollContainer" parent="Label/ProjectedDisplay/SubViewportContainer/SubViewport"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -114,20 +147,12 @@ theme = ExtResource("3_1xn43")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="Label" type="Label" parent="Label/ProjectedDisplay/SubViewport/Container"]
+[node name="Label" type="Label" parent="Label/ProjectedDisplay/SubViewportContainer/SubViewport/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
-label_settings = SubResource("LabelSettings_xsibx")
+text = "adadadadad"
+label_settings = SubResource("LabelSettings_5kcpp")
 autowrap_mode = 3
-
-[node name="Area3D" type="Area3D" parent="Label/ProjectedDisplay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81194, -0.432607, 0)
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Label/ProjectedDisplay/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.275522, 0.650021, -0.567598)
-shape = SubResource("BoxShape3D_jxjev")
 
 [node name="AudioStreamPlayer3D" parent="." instance=ExtResource("3_ihjwm")]
 volume_db = -3.0
@@ -146,10 +171,10 @@ volume_db = 2.0
 unit_size = 20.0
 bus = &"FX"
 
-[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
-[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
-[connection signal="gui_input" from="Label/ProjectedDisplay/SubViewport/Container" to="." method="_on_container_gui_input"]
-[connection signal="mouse_entered" from="Label/ProjectedDisplay/SubViewport/Container" to="." method="_on_container_mouse_entered"]
-[connection signal="mouse_exited" from="Label/ProjectedDisplay/SubViewport/Container" to="." method="_on_container_mouse_exited"]
-[connection signal="input_event" from="Label/ProjectedDisplay/Area3D" to="." method="_on_area_scroll"]
+[connection signal="input_event" from="butArea3D" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="butArea3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="butArea3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="input_event" from="boxArea3D" to="." method="_on_box_area_3d_input_event"]
+[connection signal="mouse_entered" from="boxArea3D" to="." method="_on_box_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="boxArea3D" to="." method="_on_box_area_3d_mouse_exited"]
+[connection signal="input_event" from="Label/textArea3D" to="." method="_on_area_scroll"]

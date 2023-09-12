@@ -1,10 +1,13 @@
-[gd_scene load_steps=54 format=3 uid="uid://bou1ohvmst6gh"]
+[gd_scene load_steps=65 format=3 uid="uid://bou1ohvmst6gh"]
 
 [ext_resource type="PackedScene" uid="uid://c38v1qoee6yag" path="res://assets/models/hand.gltf" id="1_a3jmm"]
 [ext_resource type="Shader" path="res://outline.gdshader" id="2_hura3"]
 [ext_resource type="Script" path="res://Cam.gd" id="2_m75iy"]
 [ext_resource type="Script" path="res://Cards.gd" id="4_123vg"]
 [ext_resource type="ArrayMesh" uid="uid://b6ecf2edpdwbp" path="res://assets/models/table.obj" id="5_c7b7i"]
+[ext_resource type="AudioStream" uid="uid://dt6y1pha35bnp" path="res://assets/snd/hypothesis.ogg" id="5_gs8mf"]
+[ext_resource type="Script" path="res://music.gd" id="6_6ercb"]
+[ext_resource type="Script" path="res://vignettepause.gd" id="7_ef17i"]
 [ext_resource type="ArrayMesh" uid="uid://bo6bmsxich7dl" path="res://assets/models/screen.obj" id="8_2qlw4"]
 [ext_resource type="ArrayMesh" uid="uid://7vbrlsugey4y" path="res://assets/models/buttons.obj" id="9_tvvas"]
 [ext_resource type="Script" path="res://light.gd" id="10_e7msv"]
@@ -25,6 +28,18 @@ ssao_light_affect = 0.19
 glow_intensity = 5.09
 glow_strength = 2.0
 
+[sub_resource type="Gradient" id="Gradient_ylgj3"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r6ljg"]
+gradient = SubResource("Gradient_ylgj3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n4vx3"]
+transparency = 1
+albedo_texture = SubResource("GradientTexture2D_r6ljg")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qe8xp"]
 render_priority = 0
 shader = ExtResource("2_hura3")
@@ -32,13 +47,13 @@ shader_parameter/outlineColor = Color(0, 0, 0, 1)
 shader_parameter/depth_threshold = 0.025
 shader_parameter/normal_threshold = 0.5
 shader_parameter/normal_smoothing = 0.25
-shader_parameter/max_thickness = 1.34
-shader_parameter/min_thickness = 1.0
-shader_parameter/max_distance = 10000.0
+shader_parameter/max_thickness = 2.0
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 500.0
 shader_parameter/min_distance = 2.0
 shader_parameter/grazing_fresnel_power = 5.0
 shader_parameter/grazing_angle_mask_power = 1.0
-shader_parameter/grazing_angle_modulation_factor = 20.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_vr8w4"]
 flip_faces = true
@@ -70,6 +85,24 @@ shading_mode = 0
 albedo_color = Color(1, 0.537255, 1, 1)
 disable_receive_shadows = true
 grow_amount = 1.391
+
+[sub_resource type="QuadMesh" id="QuadMesh_xocty"]
+
+[sub_resource type="Gradient" id="Gradient_5xmx2"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.553191)
+colors = PackedColorArray(1, 1, 1, 0.0705882, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h6chs"]
+gradient = SubResource("Gradient_5xmx2")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibaki"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.47451)
+
+[sub_resource type="QuadMesh" id="QuadMesh_lxmxr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v4gv8"]
 size = Vector3(3.24908, 0.936597, 4.98748)
@@ -247,7 +280,7 @@ fractal_octaves = 6
 fractal_gain = 0.685
 domain_warp_amplitude = 34.865
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7sqxd"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ud5vj"]
 seamless = true
 color_ramp = SubResource("Gradient_wfdgw")
 noise = SubResource("FastNoiseLite_vjlhp")
@@ -255,7 +288,7 @@ noise = SubResource("FastNoiseLite_vjlhp")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lagsv"]
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("NoiseTexture2D_7sqxd")
+albedo_texture = SubResource("NoiseTexture2D_ud5vj")
 heightmap_scale = 16.0
 uv1_scale = Vector3(1, 0.44, 1)
 grow_amount = 2.087
@@ -265,11 +298,11 @@ grow_amount = 2.087
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bl42q"]
 albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 1.0
-roughness = 0.65
+roughness = 0.67
 emission = Color(0.309804, 0.45098, 0.776471, 1)
 emission_energy_multiplier = 0.05
 normal_enabled = true
-normal_scale = 0.1
+normal_scale = 0.01
 normal_texture = ExtResource("15_l48e5")
 uv1_scale = Vector3(1.095, 1.095, 1.095)
 uv1_triplanar = true
@@ -287,6 +320,7 @@ uv1_triplanar = true
 size = Vector3(3, 3, 3)
 
 [node name="tableScene" type="Node3D"]
+process_mode = 3
 script = ExtResource("2_m75iy")
 screenshake = 0.3
 
@@ -300,12 +334,13 @@ transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 57.951,
 
 [node name="Camera3D" type="Camera3D" parent="ViewFrame/Pivot"]
 current = true
-fov = 20.0
+fov = 30.0
 size = 20.0
 
 [node name="OutlineShader" type="MeshInstance3D" parent="ViewFrame/Pivot/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4813, 9.53674e-06, -4.53598)
-material_override = SubResource("ShaderMaterial_qe8xp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.50009)
+material_override = SubResource("StandardMaterial3D_n4vx3")
+material_overlay = SubResource("ShaderMaterial_qe8xp")
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_vr8w4")
 
@@ -315,23 +350,25 @@ current = true
 
 [node name="RayCast3D" type="RayCast3D" parent="ViewFrame/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.62939e-06, -0.982971)
+enabled = false
+exclude_parent = false
 collide_with_areas = true
 collide_with_bodies = false
 debug_shape_custom_color = Color(0, 0.788235, 0, 1)
 debug_shape_thickness = 1
 
 [node name="Cursor" parent="ViewFrame/Pivot" instance=ExtResource("1_a3jmm")]
-transform = Transform3D(-1.00391e-14, -9.61651e-08, -2.2, -2.2, -1.78814e-07, 1.06581e-14, -1.78814e-07, 2.2, -9.61651e-08, 2.85583e-06, -2.38419e-07, -65.3338)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -68)
 
 [node name="hand2" parent="ViewFrame/Pivot/Cursor" index="0"]
-transform = Transform3D(1, 3.27826e-07, 3.01981e-14, -3.27826e-07, 1, 2.39808e-14, -3.19744e-14, -2.30926e-14, 1, 0, 0, 0)
+transform = Transform3D(1.91069e-16, -4.37114e-09, -0.1, -0.1, -4.37114e-09, 0, -4.37114e-09, 0.1, -4.37114e-09, 0, 0, 0)
 layers = 3
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_3dal0")
 surface_material_override/0 = SubResource("StandardMaterial3D_rcinm")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="ViewFrame/Pivot/Cursor"]
-transform = Transform3D(0.454546, 1.49012e-08, -8.88178e-16, -1.49012e-08, 0.454546, -1.33227e-15, 0, -1.42109e-14, 0.454545, 0.293492, 1.83532, -3.4414e-08)
+transform = Transform3D(1, 3.27826e-08, -1.77635e-15, -3.27826e-08, 1, 0, 8.88178e-16, 0, 1, 0, 0, 0.305)
 layers = 3
 light_energy = 0.1
 omni_range = 25.543
@@ -340,6 +377,510 @@ omni_attenuation = 0.466516
 [node name="Cards" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.339876, 0)
 script = ExtResource("4_123vg")
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_gs8mf")
+pitch_scale = 0.01
+autoplay = true
+bus = &"Music"
+script = ExtResource("6_6ercb")
+
+[node name="pausevignette" type="MeshInstance3D" parent="music"]
+transform = Transform3D(75.8363, 0, 0, 0, 2.01125, 57.372, 0, -51.3725, 2.24614, 0, 12.8123, 9.00992)
+material_override = SubResource("StandardMaterial3D_n4vx3")
+material_overlay = SubResource("ShaderMaterial_qe8xp")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_xocty")
+skeleton = NodePath("../../ViewFrame/Pivot/Camera3D")
+
+[node name="Node3D" type="Node3D" parent="music/pausevignette"]
+script = ExtResource("7_ef17i")
+
+[node name="Sprite3D" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(0.004, 0, 0, 0, 0.005, -2.0948e-10, 0, 2.0948e-10, 0.005, 0.0435788, 0, 0)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D2" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(0.004, 0, 0, 0, 0.005, -2.24442e-10, 0, 2.24442e-10, 0.005, -0.0701124, 0.0952873, -0.00334042)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D3" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(0.004, 0, 0, 0, 0.005, -2.24442e-10, 0, 2.24442e-10, 0.005, -0.10578, -0.0788586, 0.00276449)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D4" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(0.004, 0, 0, 0, 0.005, -2.24443e-10, 0, 2.24443e-10, 0.005, 0.0915073, 0.177432, -0.00622007)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D5" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, -0.0589537, -0.0164248, -0.136683)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D6" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, 0.039516, 0.110444, -0.141131)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D7" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, -0.0603077, 0.217411, -0.144881)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D8" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, 0.0389389, -0.141538, -0.132297)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D9" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, -0.0589537, -0.00242737, 0.183459)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D10" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, 0.039516, 0.124441, 0.179011)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D11" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, -0.0603077, 0.231409, 0.175261)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D12" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00131672, 0.00471844, -0.000165411, -0.00377475, -0.00163774, 0.000232695, 0.000132329, 0.000232695, 0.00499184, 0.0389389, -0.127541, 0.187845)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D13" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.135344, 0.127708, 0.178897)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D14" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.260795, 0.0732108, 0.180807)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D15" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.268537, 0.254761, 0.174443)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D16" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.116175, -0.0611679, 0.185518)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D17" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.266384, 0.177531, 0.17715)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D18" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.140933, 0.123034, 0.17906)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D19" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.133192, 0.304584, 0.172696)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D20" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.285553, -0.011345, 0.183771)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D21" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.324888, -0.0888295, 0.186488)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D22" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.199437, -0.143327, 0.188398)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D23" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.191696, 0.038223, 0.182034)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D24" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.344057, -0.277706, 0.193109)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D25" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.118443, 0.0486986, -0.00405678)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D26" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.243894, -0.00579883, -0.0021463)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D27" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.251636, 0.175751, -0.00851077)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D28" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.0992741, -0.140178, 0.00256445)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D29" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.118443, 0.0399856, -0.203335)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D30" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.243894, -0.0145118, -0.201424)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D31" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.251636, 0.167038, -0.207789)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D32" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.0992741, -0.14889, -0.196714)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D33" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.215886, 0.0399856, -0.203335)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D34" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.0904353, -0.0145118, -0.201424)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D35" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.0826937, 0.167038, -0.207789)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D36" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.235055, -0.14889, -0.196714)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D37" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, -0.0699123, 0.292448, 0.0172785)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D38" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, -0.0452792, 0.103127, 0.0239154)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D39" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, 0.0677439, 0.176191, 0.021354)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D40" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, -0.19259, 0.230997, 0.0194327)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D41" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.324888, -0.411244, 0.19779)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D42" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.199437, -0.465741, 0.199701)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D43" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.191696, -0.284191, 0.193336)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D44" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912978, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.344057, -0.60012, 0.204411)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D45" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.118443, -0.273716, 0.00724587)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D46" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.243894, -0.328213, 0.00915635)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D47" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.251636, -0.146663, 0.00279188)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D48" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.0992741, -0.462592, 0.0138671)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D49" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, 0.118443, -0.282429, -0.192032)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D50" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.243894, -0.336926, -0.190122)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D51" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.251636, -0.155376, -0.196486)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D52" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.0992741, -0.471304, -0.185411)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D53" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.215886, -0.282429, -0.192032)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D54" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.0904353, -0.336926, -0.190122)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D55" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.0826937, -0.155376, -0.196486)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D56" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.235055, -0.471304, -0.185411)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D57" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, -0.0699123, -0.029966, 0.0285811)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D58" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, -0.0452792, -0.219287, 0.035218)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D59" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, 0.0677439, -0.146223, 0.0326567)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D60" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498988, -0.19259, -0.0914173, 0.0307353)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D61" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20055e-05, 0.000345506, 0.00498789, -0.0182909, -0.176242, 0.377195)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D62" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.10716, -0.23074, 0.379106)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D63" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.114902, -0.0491899, 0.372742)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D64" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, -0.03746, -0.365118, 0.383817)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D65" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912977, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.42504, -0.0387144, 0.186651)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D66" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.550491, -0.0932116, 0.188562)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D67" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.558233, 0.0883381, 0.182197)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D68" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.405871, -0.22759, 0.193273)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D69" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.42504, -0.0474273, -0.0126267)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D70" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.550491, -0.101925, -0.0107163)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D71" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.558233, 0.0796252, -0.0170807)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D72" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.405871, -0.236303, -0.00600545)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D73" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.090711, -0.0474273, -0.0126267)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D74" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.216162, -0.101925, -0.0107163)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D75" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.223903, 0.0796252, -0.0170807)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D76" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00389428, 0.00114122, -4.00071e-05, -0.000912976, -0.00485574, 0.000345506, 3.20054e-05, 0.000345506, 0.00498789, 0.071542, -0.236303, -0.00600545)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D77" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498987, 0.236685, 0.205035, 0.207987)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D78" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498987, 0.261318, 0.0157141, 0.214623)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D79" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498987, 0.374341, 0.088778, 0.212062)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="Sprite3D80" type="Sprite3D" parent="music/pausevignette/Node3D"]
+transform = Transform3D(-0.00259673, -0.00380083, 0.000133243, 0.00304066, -0.00323579, 0.000288716, -0.000106595, 0.000288716, 0.00498987, 0.114007, 0.143584, 0.210141)
+billboard = 1
+double_sided = false
+texture = SubResource("GradientTexture2D_h6chs")
+
+[node name="paused" type="MeshInstance3D" parent="."]
+transform = Transform3D(84.2654, 0, 0, 0, -3.68336e-06, 84.2654, 0, -84.2654, -3.68336e-06, 0, 1.25217, -5.47341e-08)
+material_override = SubResource("StandardMaterial3D_ibaki")
+mesh = SubResource("QuadMesh_lxmxr")
 
 [node name="CamPos1" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984807, 0, -0.984807, 0.173648, 0, 66.555, 10.452)

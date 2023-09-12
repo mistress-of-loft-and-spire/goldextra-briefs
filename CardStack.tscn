@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://5oe74pu3qtmp"]
+[gd_scene load_steps=17 format=3 uid="uid://5oe74pu3qtmp"]
 
 [ext_resource type="Script" path="res://CardStack.gd" id="1_r1a3u"]
 [ext_resource type="Texture2D" uid="uid://clmf50fuwcre5" path="res://assets/img/card_back.png" id="3_40pnd"]
@@ -12,12 +12,32 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_l8vb6"]
 size = Vector3(2.85254, 4.8538, 1)
 
-[sub_resource type="Gradient" id="Gradient_e24bo"]
+[sub_resource type="Gradient" id="Gradient_2qp5s"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3feoc"]
+gradient = SubResource("Gradient_2qp5s")
+width = 65
+
+[sub_resource type="FontVariation" id="FontVariation_0uqyx"]
+variation_embolden = 0.79
+
+[sub_resource type="Gradient" id="Gradient_jg6s5"]
+offsets = PackedFloat32Array(0.614907, 0.639752)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g1wr1"]
+gradient = SubResource("Gradient_jg6s5")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_5vp4y"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cjlom"]
-gradient = SubResource("Gradient_e24bo")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w475p"]
+gradient = SubResource("Gradient_5vp4y")
 width = 1
 height = 1
 
@@ -25,6 +45,7 @@ height = 1
 script = ExtResource("1_r1a3u")
 
 [node name="Area3D" type="Area3D" parent="."]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.111096, 0)
 monitoring = false
 monitorable = false
@@ -33,6 +54,7 @@ monitorable = false
 shape = SubResource("BoxShape3D_l8vb6")
 
 [node name="Visual" type="Node3D" parent="."]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.061, -0.409)
 
 [node name="Illu" type="Sprite3D" parent="Visual"]
@@ -48,12 +70,56 @@ shaded = true
 texture = ExtResource("5_dhssg")
 
 [node name="highlight" type="Sprite3D" parent="Visual"]
-transform = Transform3D(1.08082, 0, 0, 0, 1.05552, 3.55271e-15, 0, -3.55271e-15, 1.08082, 0, -0.771419, 0.022664)
-visible = false
+transform = Transform3D(1.05545, 0, 0, 0, 1.03074, 1.06581e-14, 0, -7.10543e-15, 1.05545, 0, -0.771419, 0.158406)
 render_priority = -1
 texture = ExtResource("4_dh5oa")
 
+[node name="candrawhighlight" type="Sprite3D" parent="Visual"]
+transform = Transform3D(1.10814, 0, 0, 0, 1.0822, 3.55271e-15, 0, 0, 1.10814, 0, -0.771419, 0.022664)
+modulate = Color(0.486275, 0.32549, 0.137255, 1)
+render_priority = -1
+texture = ExtResource("4_dh5oa")
+
+[node name="Progress" type="Sprite3D" parent="Visual"]
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 1, -1.32606, 1.58062, 1.25343)
+visible = false
+offset = Vector2(33, 0)
+texture = SubResource("GradientTexture2D_3feoc")
+
+[node name="Countdown" type="Label3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.129, -2.45312, 1.19252)
+sorting_offset = 1.0
+alpha_scissor_threshold = 0.588
+texture_filter = 0
+text = "5"
+font = SubResource("FontVariation_0uqyx")
+font_size = 140
+outline_size = 0
+uppercase = true
+
+[node name="ProgressCircle" type="Sprite3D" parent="Visual/Countdown"]
+transform = Transform3D(2.26424, 0, 0, 0, 2.26424, -7.10543e-15, 0, 7.10543e-15, 2.26424, 0, 0, -0.0231979)
+alpha_cut = 1
+texture = SubResource("GradientTexture2D_g1wr1")
+
+[node name="cardcount" type="Label3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.129, -2.45312, 1.19252)
+sorting_offset = 1.0
+alpha_scissor_threshold = 0.588
+texture_filter = 0
+text = "5"
+font = SubResource("FontVariation_0uqyx")
+font_size = 140
+outline_size = 0
+uppercase = true
+
+[node name="ProgressCircle" type="Sprite3D" parent="Visual/cardcount"]
+transform = Transform3D(2.26424, 0, 0, 0, 2.26424, -7.10543e-15, 0, 7.10543e-15, 2.26424, 0, 0, -0.0231979)
+alpha_cut = 1
+texture = SubResource("GradientTexture2D_g1wr1")
+
 [node name="Illu" type="Sprite3D" parent="."]
+process_mode = 3
 transform = Transform3D(0.697, 0, 0, 0, -3.10351e-08, 0.697, 0, -0.71, -3.04668e-08, 0, 0.952274, 0.0351143)
 sorting_offset = 1.0
 transparent = false
@@ -149,21 +215,6 @@ transform = Transform3D(1.41878, 0, 0, 0, 1.3928, 7.10543e-15, 0, 7.10543e-15, 1
 shaded = true
 texture = ExtResource("5_dhssg")
 
-[node name="Label" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.56311, 2.97286, -2.02456)
-sorting_offset = 1.0
-texture_filter = 0
-font_size = 140
-horizontal_alignment = 0
-vertical_alignment = 0
-autowrap_mode = 3
-width = 2000.0
-
-[node name="Sprite3D" type="Sprite3D" parent="Label"]
-transform = Transform3D(2.15982, 0, 0, 0, 1, 0, 0, 0, 1, 4.84304, -2.09975, -0.66687)
-pixel_size = 5.0
-texture = SubResource("GradientTexture2D_cjlom")
-
 [node name="AudioStreamPlayer3D" parent="." instance=ExtResource("5_naamf")]
 volume_db = -3.0
 unit_size = 20.0
@@ -186,6 +237,23 @@ volume_db = -5.0
 unit_size = 20.0
 pitch_scale = 12.0
 bus = &"FX"
+
+[node name="Label" type="Label3D" parent="."]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.69579, 1.71989, -2.11813)
+sorting_offset = 1.0
+texture_filter = 0
+font_size = 75
+outline_size = 100
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 3
+width = 1600.0
+
+[node name="Sprite3D" type="Sprite3D" parent="Label"]
+transform = Transform3D(1.72868, 0, 0, 0, 1.15253, 0, 0, 0, 1, 3.97574, -2.52264, -0.269779)
+pixel_size = 5.0
+texture = SubResource("GradientTexture2D_w475p")
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]

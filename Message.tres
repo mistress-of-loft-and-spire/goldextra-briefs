@@ -3,6 +3,11 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7foj"]
 content_margin_right = 30.0
 bg_color = Color(0, 0, 0, 1)
+border_width_left = 30
+border_width_top = 30
+border_width_right = 30
+border_width_bottom = 30
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xactb"]
 bg_color = Color(0.192157, 0.309804, 0.588235, 1)

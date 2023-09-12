@@ -1,0 +1,103 @@
+[gd_scene load_steps=12 format=3 uid="uid://pbifj1mx2g7h"]
+
+[ext_resource type="Script" path="res://void.gd" id="1_fwqf3"]
+[ext_resource type="Texture2D" uid="uid://betnhghs4pntm" path="res://assets/img/siteb.png" id="2_3dfa4"]
+[ext_resource type="Script" path="res://MeshInstance3D.gd" id="2_j0rhi"]
+
+[sub_resource type="Gradient" id="Gradient_uy1rt"]
+offsets = PackedFloat32Array(0, 0.552795)
+colors = PackedColorArray(0.823529, 0, 0, 1, 1, 0, 1, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_03hpi"]
+frequency = 0.009
+fractal_type = 3
+fractal_octaves = 6
+fractal_gain = 0.685
+domain_warp_amplitude = 34.865
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7sqxd"]
+seamless = true
+color_ramp = SubResource("Gradient_uy1rt")
+noise = SubResource("FastNoiseLite_03hpi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_weoi2"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_7sqxd")
+heightmap_scale = 16.0
+uv1_scale = Vector3(1, 0.44, 1)
+grow_amount = 2.087
+
+[sub_resource type="QuadMesh" id="QuadMesh_jnjya"]
+
+[sub_resource type="Environment" id="Environment_jx716"]
+background_mode = 1
+tonemap_mode = 1
+tonemap_exposure = 1.75
+ssao_intensity = 14.97
+ssao_detail = 4.5
+ssao_light_affect = 0.19
+glow_intensity = 5.09
+glow_strength = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etvql"]
+albedo_texture = ExtResource("2_3dfa4")
+uv1_offset = Vector3(0.5, 0, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_r5dcc"]
+
+[node name="planet" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.82705)
+cull_mask = 1047520
+current = true
+
+[node name="void" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(114.51, -9.86165e-13, -5.28221e-12, 5.28217e-12, 37.347, 85.5296, 2.01053e-12, -41.9528, 76.1398, 0.536371, -16.7468, -20.548)
+layers = 32
+material_override = SubResource("StandardMaterial3D_weoi2")
+mesh = SubResource("QuadMesh_jnjya")
+script = ExtResource("1_fwqf3")
+
+[node name="void2" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(114.51, -1.51713e-12, 1.78634e-12, -1.78636e-12, -48.6512, -57.2257, -3.093e-12, -28.0694, 99.1859, 0.536371, 26.3295, -28.3001)
+layers = 32
+material_override = SubResource("StandardMaterial3D_weoi2")
+mesh = SubResource("QuadMesh_jnjya")
+script = ExtResource("1_fwqf3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jx716")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(23.665, 0, 0, 0, 23.6619, -0.386168, 0, 0.386168, 23.6619, 0, 0, -20.0494)
+layers = 32
+material_override = SubResource("StandardMaterial3D_etvql")
+mesh = SubResource("SphereMesh_r5dcc")
+script = ExtResource("2_j0rhi")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="MeshInstance3D"]
+transform = Transform3D(0.0422564, 0, 0, 0, 0.0422564, 0, 0, 0, 0.0422564, 0.384764, 0.00573636, 0.351488)
+layers = 32
+light_color = Color(0.176471, 1, 1, 1)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="MeshInstance3D"]
+transform = Transform3D(0.0422564, 0, 0, 0, 0.0422564, 0, 0, 0, 0.0422564, 0.137189, -0.166137, 0.478756)
+layers = 32
+light_color = Color(0.176471, 1, 1, 1)
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="MeshInstance3D"]
+transform = Transform3D(0.0422564, 0, 0, 0, 0.0422564, 0, 0, 0, 0.0422564, -0.169954, 0.123218, 0.502794)
+layers = 32
+light_color = Color(0.176471, 1, 1, 1)
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="MeshInstance3D"]
+transform = Transform3D(0.0422564, 0, 0, 0, 0.0422564, 0, 0, 0, 0.0422564, -0.447466, -0.211247, 0.274024)
+layers = 32
+light_color = Color(0.176471, 1, 1, 1)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.262286, 0.626909, -0.733615, -0.268975, 0.777596, 0.568328, 0.926746, 0.0482601, 0.372575, 0, 8.17229, 0)
+layers = 32
+light_cull_mask = 4294967264
