@@ -1,4 +1,4 @@
-# goldextra-briefs
+# xenograft
 A frantic pigpunk tarot game
 
 >*Better be a pig than a fascist*  
